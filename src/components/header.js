@@ -1,15 +1,35 @@
 /* A shared component for navigation across the site */
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, graphql, useStaticQuery } from 'gatsby'
 
 // import './header.module.scss'
 import headerStyles from './header.module.scss'
 
+// Goal: Run another GraphQL query
+//
+// 1. Use GraphiQL to fetch the author
+// 2. Update the footer component to display the dynamic author value
+// 3. Test your work
+
 const Header = () => {
+    const data = useStaticQuery(graphql`
+        query {
+            site {
+                siteMetadata {
+                    title
+                }
+            }
+        }
+    `)
+
     return (
         <header className={headerStyles.header}>
             <div>
-                <h1><Link className={headerStyles.title} to="/">Ritchel Cousar Jr.</Link></h1>
+                <h1>
+                    <Link className={headerStyles.title} to="/">
+                        {data.site.siteMetadata.title}
+                    </Link>
+                </h1>
                 <nav>
                     <ul className={headerStyles.navList}>
                         <li><Link className={headerStyles.navItem} activeClassName={headerStyles.activeNavItem} to="/">Home</Link></li>
